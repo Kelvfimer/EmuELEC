@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="cdogs-sdl"
-PKG_VERSION="33a8190181d98ecab68dcc557a3b4ba92125ab5c"
+PKG_VERSION="4d958c4ed8e8653f660a286478d69dc0cd865629"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/cxong/cdogs-sdl"
 PKG_URL="${PKG_SITE}.git"
