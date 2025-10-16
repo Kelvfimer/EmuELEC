@@ -1,5 +1,5 @@
 --- a/Core/System.cpp	2025-10-16 09:26:40.102251400 +0200
-+++ b/Core/System.cpp	2025-10-16 12:59:01.346842136 +0200
++++ b/Core/System.cpp	2025-10-16 15:12:46.823872571 +0200
 @@ -768,14 +768,8 @@
  }
  
@@ -17,6 +17,15 @@
  
  	switch (directoryType) {
  	case DIRECTORY_PSP:
+@@ -787,7 +781,7 @@
+ 	case DIRECTORY_SAVEDATA:
+ 		return pspDirectory / "SAVEDATA";
+ 	case DIRECTORY_SCREENSHOT:
+-		return pspDirectory / "SCREENSHOT";
++		return Path("/storage/roms/screenshots");		
+ 	case DIRECTORY_SYSTEM:
+ 		return pspDirectory / "SYSTEM";
+ 	case DIRECTORY_PAUTH:
 @@ -799,16 +793,13 @@
  	case DIRECTORY_SAVESTATE:
  		return pspDirectory / "PPSSPP_STATE";
