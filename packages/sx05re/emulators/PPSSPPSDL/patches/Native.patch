@@ -1,0 +1,11 @@
+--- a/UI/NativeApp.cpp	2025-10-16 09:26:20.094756600 +0200
++++ b/UI/NativeApp.cpp	2025-10-16 11:05:55.800889136 +0200
+@@ -491,7 +491,7 @@
+ 	else // Just in case
+ 		config = "./config";
+ 
+-	g_Config.memStickDirectory = Path(config) / "ppsspp";
++	g_Config.memStickDirectory = Path("/storage/roms/savestates/PPSSPPSDL");
+ 	g_Config.flash0Directory = File::GetExeDirectory() / "assets/flash0";
+ 	if (getenv("HOME") != nullptr) {
+ 		g_Config.defaultCurrentDirectory = Path(getenv("HOME"));

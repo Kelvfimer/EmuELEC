@@ -2,8 +2,8 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="f8261ae7ff93baa30f94214965547ed0f124da14"
-CHEAT_DB_VERSION="06d4d6148b66109005f7d51c37e8344f0bc042cc"
+PKG_VERSION="c79d43db6b4e09044e31158bac1cbfdbd32eb4a0"
+CHEAT_DB_VERSION="7a45e428f29e925dd440d3ee0d4339a92cde4782"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"
@@ -34,6 +34,7 @@ pre_configure_target() {
 if [ "${DEVICE}" == "OdroidGoAdvance" ] || [ "${DEVICE}" == "GameForce" ]; then
 	sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" ${PKG_BUILD}/CMakeLists.txt
 fi
+sed -i 's|add_compile_definitions(ASSETS_DIR="${CMAKE_INSTALL_FULL_DATADIR}/ppsspp/assets/")|add_compile_definitions(ASSETS_DIR="/storage/.config/ppsspp/assets")|' ${PKG_BUILD}/CMakeLists.txt
 }
 
 pre_make_target() {

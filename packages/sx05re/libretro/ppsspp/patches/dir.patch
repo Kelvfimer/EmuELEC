@@ -1,0 +1,19 @@
+--- a/libretro/libretro.cpp	2025-10-15 10:43:45.073927600 +0200
++++ b/libretro/libretro.cpp	2025-10-15 13:00:59.864116469 +0200
+@@ -1238,14 +1238,9 @@
+ 
+    Path retro_base_dir;
+    Path retro_save_dir;
+-   const char* dir_ptr = NULL;
+-   if (environ_cb(RETRO_ENVIRONMENT_GET_SYSTEM_DIRECTORY, &dir_ptr) && dir_ptr)
+-      retro_base_dir = Path(dir_ptr);
+ 
+-   if (environ_cb(RETRO_ENVIRONMENT_GET_SAVE_DIRECTORY, &dir_ptr) && dir_ptr)
+-      retro_save_dir = Path(dir_ptr);
+-
+-   retro_base_dir /= "PPSSPP";
++   retro_base_dir /= "/storage/roms/savestates/ppsspp";
++   retro_save_dir /= "/storage/roms/savestates/ppsspp";
+ 
+    // Check if '<system_dir>/PPSSPP/compat.ini' exists, if not we can assume
+    // the user is missing the assets entirely, so let's warn them about it.
