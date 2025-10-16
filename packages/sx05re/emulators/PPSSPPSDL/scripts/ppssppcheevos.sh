@@ -7,8 +7,8 @@
 # Source predefined functions and variables
 . /etc/profile
 
-PPSSPP_ACHIEVEMENTS="/storage/.config/ppsspp/PSP/SYSTEM/ppsspp_retroachievements.dat"
-PPSSPP_INI="/storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini"
+PPSSPP_ACHIEVEMENTS="/storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/ppsspp_retroachievements.dat"
+PPSSPP_INI="/storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/ppsspp.ini"
 
 #Extract username and password from emuelec.conf
 username=$(get_ee_setting "global.retroachievements.username")
