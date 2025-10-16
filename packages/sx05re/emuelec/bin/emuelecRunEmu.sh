@@ -8,8 +8,6 @@
 
 # This whole file has become very hacky, I am sure there is a better way to do all of this, but for now, this works.
 
-blank_buffer
-
 if [ -f "/usr/bin/odroidgoa_utils.sh" ]; then
     DEFBRIGHT=$(get_ee_setting brightness.level)
     RACONF=/storage/.config/retroarch/retroarch.cfg
@@ -152,10 +150,7 @@ CLOUD_SYNC=$(get_ee_setting "${PLATFORM}.cloudsave")
 [[ "${CLOUD_SYNC}" == "1" ]] && ra_rclone.sh get "${PLATFORM}" "${ROMNAME}" &
 CLOUD_PID=$!
 
-# Loading start
-rm "tmp/Plibretro.p"
-[[ "${LIBRETRO}" = "yes" ]] && touch "tmp/Plibretro.p" && emuelec-utils init_app_video "${PLATFORM}" "${ROMNAME}" & 
-[[ "${LIBRETRO}" != "yes" ]] && emuelec-utils init_app_video "${PLATFORM}" "${ROMNAME}"
+emuelec-utils init_app_video "${PLATFORM}" "${ROMNAME}"
 
 CONTROLLERCONFIG="${arguments#*--controllers=*}"
 echo "${CONTROLLERCONFIG}" | tr -d '"' > "/tmp/controllerconfig.txt"
@@ -203,7 +198,7 @@ case ${PLATFORM} in
                 if [ "${EMU}" = "flycastsa" ]; then
             set_kill_keys "flycast"
             RUNTHIS='${TBASH} flycast.sh "${ROMNAME}"'
-                elif [ "${EMU}" = "flycastsa_dojo" ]; then
+                elif [ "${EMU}" = "flycast_dojo" ]; then
             set_kill_keys "flycastdojo"
             RUNTHIS='flycastdojo.sh "${ROMNAME}"'
                 fi
@@ -243,7 +238,9 @@ case ${PLATFORM} in
         fi
                 ;;
         "amiga"|"amigacd32")
-                if [ "${EMU}" = "AMIBERRY" ]; then
+                if [ "${EMU}" = "AMIBERRY-LITE" ]; then
+            RUNTHIS='${TBASH} amiberry-lite.sh "${ROMNAME}"'
+				elif [ "${EMU}" = "AMIBERRY" ]; then
             RUNTHIS='${TBASH} amiberry.start "${ROMNAME}"'
                 fi
                 ;;
@@ -387,7 +384,7 @@ case ${PLATFORM} in
             set_kill_keys "mame_libretro"
             mame.sh
                 fi
-                ;;               
+                ;;
 "psp")
 		if [ "$EMU" = "ppsspp_libretro" ]; then
             set_kill_keys "ppsspp_libretro"
@@ -395,6 +392,7 @@ case ${PLATFORM} in
                 fi
 		        ;;
                 esac
+
 if [[ ${PLATFORM} == "ports" ]]; then
         PORTCORE="${arguments##*-C}"  # read from -C onwards
         EMU="${PORTCORE%% *}_libretro"  # until a space is found
@@ -404,7 +402,11 @@ else
     ROMNAME_SHADER=${ROMNAME}
 fi
 
-RUNTHIS='${RABIN} ${VERBOSE} $(cat /emuelec/configs/RA_ARGS) -L /tmp/cores/${EMU}.so --config ${RACONF} "${ROMNAME}"'
+if [ -s "/emuelec/configs/RA_ARGS" ]; then
+	RA_ARGS = $(cat "/emuelec/configs/RA_ARGS")
+fi
+
+RUNTHIS='${RABIN} ${VERBOSE} ${RA_ARGS} -L /tmp/cores/${EMU}.so --config ${RACONF} "${ROMNAME}"'
 CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
 if [[ "${arguments}" == *"-state_slot"* ]]; then
@@ -540,17 +542,15 @@ else
    ret_error=${?}
 fi
 
-#blank_buffer
 # clear terminal window
         reset > /dev/tty < /dev/null 2>&1
         reset > /dev/tty0 < /dev/null 2>&1
         reset > /dev/tty1 < /dev/null 2>&1
         reset > /dev/console < /dev/null 2>&1
-        
-# END loading
-[[ "${LIBRETRO}" = "yes" ]] && ${TBASH} show_splash.sh "stopplayer"
 
-emuelec-utils end_app_video
+# END loading
+
+emuelec-utils end_app_video "${PLATFORM}" "${ROMNAME}"
 
 emuelec-utils set_rotation "0" "${EMULATOR}"
 
@@ -643,11 +643,11 @@ if [[ "${ret_error}" != "0" ]]; then
 
     # Since the error was not because of missing BIOS but we did get an error, display the log to find out
     [[ "${ret_bios}" == "0" ]] && text_viewer -e -w -t "Error! ${PLATFORM}-${EMULATOR}-${CORE}-${ROMNAME}" -f 24 ${EMUELECLOG}
-    blank_buffer
+    emuelec-utils blank_buffer
     exit 1
 else
     echo "exit 0" >> ${EMUELECLOG}
     echo "return_from_game" > /tmp/es_return_from_game
-    blank_buffer
+    emuelec-utils blank_buffer
     exit 0
 fi
