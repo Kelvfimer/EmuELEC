@@ -7,7 +7,7 @@
 
 [ ! -f /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/ppsspp.ini ] && mkdir -p /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM && cp -Rf /usr/config/ppsspp/PSP/SYSTEM/ppsspp.ini /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/ppsspp.ini
 
-[ ! -f /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/controls.ini ] && cp -Rf /usr/config/ppsspp/PSP/SYSTEM/ppsspp.ini /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/controls.ini
+[ ! -f /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/controls.ini ] && cp -Rf /usr/config/ppsspp/PSP/SYSTEM/controls.ini /storage/roms/savestates/PPSSPPSDL/PSP/SYSTEM/controls.ini
 
 if [ ! -d "/storage/roms/savestates/PPSSPPSDL/PSP/Cheats" ] || [ -z "$(ls -A /storage/roms/savestates/PPSSPPSDL/PSP/Cheats 2>/dev/null)" ]; then
     cp -Rf /usr/config/ppsspp/PSP/Cheats/. /storage/roms/savestates/PPSSPPSDL/PSP/Cheats
