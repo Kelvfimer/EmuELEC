@@ -1,5 +1,5 @@
 --- a/Core/System.cpp	2025-10-16 09:26:40.102251400 +0200
-+++ b/Core/System.cpp	2025-10-16 10:07:48.710262335 +0200
++++ b/Core/System.cpp	2025-10-16 12:59:01.346842136 +0200
 @@ -768,14 +768,8 @@
  }
  
@@ -17,7 +17,26 @@
  
  	switch (directoryType) {
  	case DIRECTORY_PSP:
-@@ -819,11 +813,11 @@
+@@ -799,16 +793,13 @@
+ 	case DIRECTORY_SAVESTATE:
+ 		return pspDirectory / "PPSSPP_STATE";
+ 	case DIRECTORY_CACHE:
+-		return pspDirectory / "SYSTEM/CACHE";
++		return Path("/storage/.config/ppsspp/PSP/SYSTEM/CACHE");
+ 	case DIRECTORY_TEXTURES:
+ 		return pspDirectory / "TEXTURES";
+ 	case DIRECTORY_PLUGINS:
+ 		return pspDirectory / "PLUGINS";
+ 	case DIRECTORY_APP_CACHE:
+-		if (!g_Config.appCacheDirectory.empty()) {
+-			return g_Config.appCacheDirectory;
+-		}
+-		return pspDirectory / "SYSTEM/CACHE";
++		return Path("/storage/.config/ppsspp/PSP/SYSTEM/CACHE");
+ 	case DIRECTORY_VIDEO:
+ 		return pspDirectory / "VIDEO";
+ 	case DIRECTORY_AUDIO:
+@@ -819,11 +810,11 @@
  		return pspDirectory / "themes";
  
  	case DIRECTORY_MEMSTICK_ROOT:
